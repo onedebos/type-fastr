@@ -1,0 +1,2 @@
+src/styles/*.css linguist-detectable=false
+tailwind.config.js linguist-detectable=false
