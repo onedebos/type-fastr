@@ -14,6 +14,7 @@ export const store = configureStore({
   reducer: {
     gameStore: gameSliceReducer,
   },
+  devTools: process.env.NODE_ENV !== "development" ? false : true,
 });
 
 ReactDOM.render(
