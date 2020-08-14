@@ -6,6 +6,13 @@ A typing game that shows you how many words and characters you can type per minu
 
 - React
 - Redux toolkit
+- Tailwindcss
+- Firebase firestore
+- TypeScript
+
+## Live
+
+[Click here](https://type-fastr.netlify.app)
 
 ## Getting Started
 
