@@ -5,7 +5,7 @@ import {
   setTimer,
 } from "../features/game/gameSlice";
 
-const seconds = 5;
+const seconds = 60;
 let time = 0;
 let interval: any;
 
