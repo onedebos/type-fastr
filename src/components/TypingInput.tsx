@@ -22,7 +22,7 @@ const TypingInput: React.FC<WordProps> = ({
         disabled={gameStarted ? undefined : true}
         value={currentChar}
         onChange={handleChange}
-        className="border-2 border-black w-3/4 md:w-1/2 mt-4 px-2 py-2 md:py-4 rounded-md"
+        className="border-2 border-black w-3/4 md:w-1/2 mt-4 px-2 py-2 md:py-4 rounded-md focus:outline-none"
       />
       <div>
         <button
