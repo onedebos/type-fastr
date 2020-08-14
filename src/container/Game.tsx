@@ -16,7 +16,7 @@ import {
 import TypingInput from "../components/TypingInput";
 import WordToMatch from "../components/WordToMatch";
 import randomWords from "random-words";
-import { startTimer } from "../utils/utils";
+import { startTimer, capitalize } from "../utils/utils";
 import AlertResult from "../components/AlertResult";
 import Layout from "../components/Layout";
 import Ranking from "../components/Ranking";
@@ -72,7 +72,7 @@ const Game = () => {
       return;
     }
     const player = {
-      playerName: playerName,
+      playerName: capitalize(playerName),
       wpm: wordCount,
       cpm: charCount,
     };
@@ -104,7 +104,7 @@ const Game = () => {
         <WordToMatch wordToMatch={wordToMatch} timer={timer} />
         <TypingInput
           handleChange={(e: React.FormEvent<HTMLInputElement>) =>
-            handleChange(e.currentTarget.value)
+            handleChange(e.currentTarget.value.toLowerCase())
           }
           currentChar={currentChar}
           startGame={startGame}
