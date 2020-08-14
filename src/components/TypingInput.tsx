@@ -26,6 +26,7 @@ const TypingInput: React.FC<WordProps> = ({
       />
       <div>
         <button
+          disabled={gameStarted ? true : undefined}
           className={`w-3/4 p-3 text-white font-bold mt-3 rounded-md focus:outline-none md:w-2/6 lg:w-1/6 md:text-lg ${
             gameStarted ? "bg-red-600" : "bg-indigo-600"
           }`}
