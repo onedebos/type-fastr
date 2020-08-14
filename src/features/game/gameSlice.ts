@@ -1,5 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
+import {
+  getFromFireStore,
+  sendToFireStore,
+} from "../../utils/services/service";
+import { RankingObj } from "../../utils/services/service";
 import { AppThunk } from "../../index";
 
 export interface GameState {
@@ -11,10 +15,16 @@ export interface GameState {
   charCount: number;
   gameStarted: boolean;
   gameOver: boolean;
+  timer: number;
+  playerName: string;
+  ranking: boolean;
+  playersRanking: object[];
+  openModal: boolean;
+  showRanking: boolean;
 }
 
 const initialState: GameState = {
-  wordToMatch: "",
+  wordToMatch: "____",
   currentChar: "",
   loading: false,
   errors: "",
@@ -22,6 +32,12 @@ const initialState: GameState = {
   charCount: 0,
   gameStarted: false,
   gameOver: false,
+  timer: 0,
+  playerName: "",
+  ranking: false,
+  showRanking: false,
+  playersRanking: [],
+  openModal: false,
 };
 
 const gameSlice = createSlice({
@@ -43,8 +59,8 @@ const gameSlice = createSlice({
     setCurrentChar: (state, { payload }: PayloadAction<string>) => {
       state.currentChar = payload;
     },
-    setWordCount: (state) => {
-      state.wordCount += 1;
+    setWordCount: (state, { payload }: PayloadAction<number>) => {
+      state.wordCount = payload / 5;
     },
     setCharCount: (state, { payload }: PayloadAction<string>) => {
       const word = payload;
@@ -55,6 +71,24 @@ const gameSlice = createSlice({
     },
     setGameOver: (state, { payload }: PayloadAction<boolean>) => {
       state.gameOver = payload;
+    },
+    setTimer: (state, { payload }: PayloadAction<number>) => {
+      state.timer = payload;
+    },
+    setPlayerName: (state, { payload }: PayloadAction<string>) => {
+      state.playerName = payload;
+    },
+    setRanking: (state, { payload }: PayloadAction<boolean>) => {
+      state.ranking = payload;
+    },
+    setPlayersRanking: (state, { payload }: PayloadAction<object[]>) => {
+      state.playersRanking = payload;
+    },
+    setOpenModal: (state, { payload }: PayloadAction<boolean>) => {
+      state.openModal = payload;
+    },
+    setShowRanking: (state, { payload }: PayloadAction<boolean>) => {
+      state.showRanking = payload;
     },
   },
 });
@@ -68,6 +102,12 @@ export const {
   setCharCount,
   setGameStarted,
   setGameOver,
+  setTimer,
+  setPlayerName,
+  setRanking,
+  setPlayersRanking,
+  setOpenModal,
+  setShowRanking,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
@@ -75,20 +115,23 @@ export default gameSlice.reducer;
 export const gameSelector = (state: { gameStore: GameState }) =>
   state.gameStore;
 
-export const getWords = (): AppThunk => {
+export const sendRankingToFirestore = (player: RankingObj): AppThunk => {
   return async (dispatch) => {
-    dispatch(setLoading(true));
+    dispatch(setRanking(true));
     try {
-      const baseURL: string = "https://api.nasa.gov/planetary/apod";
-      // your apiKey should ideally be in a .env file
-      const apiKey = "DE8fsud7knGnE2BZLsKkookQDDZlaIz9YXY6wwpO";
-      const res = await axios.get(
-        `${baseURL}?api_key=${apiKey}&start_date=2020-05-07&end_date=2020-05-09`
-      );
-      dispatch(setLoading(false));
+      await sendToFireStore(player);
+      const res = await getFromFireStore();
+      const arr: object[] = [];
+      res.forEach((doc) => arr.push(doc.data()));
+      dispatch(setPlayersRanking(arr));
+
+      dispatch(setRanking(false));
+      dispatch(setGameOver(false));
+      dispatch(setOpenModal(false));
+      dispatch(setShowRanking(true));
     } catch (error) {
       dispatch(setErrors(error.message));
-      dispatch(setLoading(false));
+      dispatch(setRanking(false));
     }
   };
 };
