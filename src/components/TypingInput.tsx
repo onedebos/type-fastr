@@ -32,7 +32,7 @@ const TypingInput: React.FC<WordProps> = ({
           }`}
           onClick={startGame}
         >
-          {!gameStarted || gameOver ? "Start Typing" : "Playing..."}
+          {!gameStarted || gameOver ? "Start Typing" : "Typing..."}
         </button>
       </div>
     </div>

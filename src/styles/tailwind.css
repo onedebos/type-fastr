@@ -1,5 +1,5 @@
 @tailwind base;
-
+/* purgecss start ignore */
 body {
   margin: 0;
 
@@ -14,5 +14,54 @@ code {
     monospace;
 }
 
+/* purgecss end ignore */
 @tailwind components;
+
+.main-bg-color {
+  background-color: #f7faff;
+}
+
+.text-main-color {
+  color: #00234b;
+}
+
+.text-sub-color {
+  color: #624de3;
+}
+
+.button-color {
+  background-color: #624de3;
+}
+
+.sub-bg-color {
+  background-color: #00234b;
+}
+
+#loading {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+.alternate-colors :nth-child(even) {
+  background-color: #624de3;
+  color: white;
+}
+
 @tailwind utilities;

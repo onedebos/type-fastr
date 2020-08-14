@@ -20,7 +20,6 @@ import { startTimer, capitalize } from "../utils/utils";
 import AlertResult from "../components/AlertResult";
 import Layout from "../components/Layout";
 import Ranking from "../components/Ranking";
-import "../styles/game.css";
 
 const Game = () => {
   const dispatch = useDispatch();
