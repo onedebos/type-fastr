@@ -25,6 +25,10 @@ yarn install
 npm start
 ```
 
+## Tests
+
+- Not yet written
+
 ## Authors
 
 👤 **Adebola Adeniran**

@@ -4,6 +4,7 @@ import {
   sendToFireStore,
 } from "../../utils/services/service";
 import { RankingObj } from "../../utils/services/service";
+
 import { AppThunk } from "../../index";
 
 export interface GameState {
@@ -121,9 +122,10 @@ export const sendRankingToFirestore = (player: RankingObj): AppThunk => {
     try {
       await sendToFireStore(player);
       const res = await getFromFireStore();
-      const arr: object[] = [];
+      const arr: any = [];
       res.forEach((doc) => arr.push(doc.data()));
-      dispatch(setPlayersRanking(arr));
+      const sortedArr = arr.sort((a: any, b: any) => b.cpm - a.cpm);
+      dispatch(setPlayersRanking(sortedArr));
 
       dispatch(setRanking(false));
       dispatch(setGameOver(false));
